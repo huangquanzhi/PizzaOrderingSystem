@@ -5,12 +5,16 @@
  */
 package controller;
 
+import com.connect.db.DBConnection;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
@@ -18,45 +22,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class UserLoginServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserLoginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserLoginServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("index.jsp");
     }
 
     /**
@@ -70,7 +38,47 @@ public class UserLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String strUsername = request.getParameter("username");
+        String strPassword = request.getParameter("password");
+        //error message
+        String message = "";
+        String page = "index.jsp";
+
+        //create connection
+        DBConnection dbConn = (DBConnection) request.getServletContext().getAttribute("dbConn");
+
+        UserDAO userDAO = new UserDAO();
+
+        boolean exist = userDAO.userExist(dbConn.getConnection(), strUsername);
+
+        //user exist
+        if (exist) {
+            User user = userDAO.AuthLog(dbConn.getConnection(), strUsername, strPassword);
+            //auth successful
+            if (user != null) {
+
+                if (user.getFirstName() == null || user.getLastName() == null || user.getAddress() == null) {
+                    //user detail not completed
+                    page = "setting.jsp";
+                } else {
+                    //user detail completed
+                    page = "welcome.jsp";
+                }
+                //set user in sessions
+                request.getSession().setAttribute("user", user);
+            } else {
+                page = "error.jsp";
+                message = "Password incorrect!";
+            }
+        } else {
+            page = "error.jsp";
+            message = "User doesn't exist!";
+        }
+
+        request.setAttribute("error", message);
+        RequestDispatcher view = request.getRequestDispatcher(response.encodeRedirectURL(page));
+        view.forward(request, response);
     }
 
     /**
@@ -80,7 +88,7 @@ public class UserLoginServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+        return "User Login Servlet";
+    }
 
 }

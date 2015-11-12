@@ -16,25 +16,57 @@
         <servlet-name>AdminController</servlet-name>
         <servlet-class>controller.AdminController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <servlet-class>controller.CheckoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLoginServlet</servlet-name>
-        <url-pattern>/UserLoginServlet</url-pattern>
+        <url-pattern>/UserLogin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserRegisterServlet</servlet-name>
-        <url-pattern>/UserRegisterServlet</url-pattern>
+        <url-pattern>/UserRegister</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PizzaOrderServlet</servlet-name>
-        <url-pattern>/PizzaOrderServlet</url-pattern>
+        <url-pattern>/PizzaOrder</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminController</servlet-name>
         <url-pattern>/AdminController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <url-pattern>/Checkout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>listener.DBConnectionListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>driver</param-name>
+        <param-value>com.mysql.jdbc.Driver</param-value>
+    </context-param>
+    <context-param>
+        <param-name>url</param-name>
+        <param-value>jdbc:mysql://localhost/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>database</param-name>
+        <param-value>pizzaorder</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbusername</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbpassword</param-name>
+        <param-value>sheridan</param-value>
+    </context-param>
 </web-app>

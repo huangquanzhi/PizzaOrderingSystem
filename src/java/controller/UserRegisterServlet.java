@@ -5,13 +5,16 @@ package controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import com.connect.db.DBConnection;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
@@ -19,45 +22,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class UserRegisterServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserRegisterServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserRegisterServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("index.jsp");
     }
 
     /**
@@ -71,7 +38,44 @@ public class UserRegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String strUsername = request.getParameter("username");
+        String strPassword = request.getParameter("password");
+        String strFirstname = request.getParameter("firstname");
+        String strLastname = request.getParameter("lastname");
+        String doublePhone = request.getParameter("phone").toString();
+        String strAddress = request.getParameter("address");
+
+        //error message
+        String message = "";
+        String page = "index.jsp";
+        boolean registered = false;
+
+        DBConnection dbConn = (DBConnection) request.getServletContext().getAttribute("dbConn");
+
+        UserDAO userDAO = new UserDAO();
+
+        boolean exist = userDAO.userExist(dbConn.getConnection(), strUsername);
+
+        if(!exist){
+            User user = new User(strUsername,strPassword,strFirstname,strLastname,doublePhone,strAddress);
+            registered = userDAO.Register(dbConn.getConnection(), user);
+            if(registered){
+                user.setUserID(userDAO.getUserID(dbConn.getConnection(), user));
+                page = "welcome.jsp";
+                request.getSession().setAttribute("user", user);
+            }else{
+                message = "Failed, please try again!";
+                page = "error.jsp";
+            }
+        }else{
+            message = "User already exist in database!";
+            page = "error.jsp";
+        }
+        
+        request.setAttribute("error", message);
+        RequestDispatcher view = request.getRequestDispatcher(response.encodeRedirectURL(page));
+        view.forward(request, response);
+
     }
 
     /**
