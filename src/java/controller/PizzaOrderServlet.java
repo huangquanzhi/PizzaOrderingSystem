@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,11 +41,11 @@ public class PizzaOrderServlet extends HttpServlet {
 
         if (request.getSession().getAttribute("cart") == null) {
             request.getSession().setAttribute("cart", new ArrayList<Pizza>());
-            request.setAttribute("pizzaCount", 0);
         } else {
-
             ArrayList<Pizza> cart = (ArrayList<Pizza>) request.getSession().getAttribute("cart");
             Pizza pizza = new Pizza();
+
+            int qty = Integer.parseInt(request.getParameter("qty"));
 
             //set delivery method
             boolean delivery = (request.getParameter("delivery").equals("true")) ? true : false;
@@ -57,17 +56,34 @@ public class PizzaOrderServlet extends HttpServlet {
             for (String t : request.getParameterValues("toppings")) {
                 pizza.addTopping(t);
             }
+
             //calculate the price of the pizza
             pizza.getToppingCount();
-            pizza.calPrice();
-
-            //add to cart
-            cart.add(pizza);
+            if (cart.size() > 0) {
+                for (int i = 0; i < cart.size(); i++) {
+                    Pizza p = cart.get(i);  //get the pizza in arraylist
+                    if (p.equals(pizza)) {  //check if its the same pizza
+                        p.setQty(p.getQty() + qty); //set Qty
+                        p.calPrice();   //cal price of total
+                        break;
+                    }else {
+                        pizza.setQty(qty);
+                        pizza.calPrice();
+                        //add to cart
+                        cart.add(pizza);
+                        break;
+                    }
+                }
+                //not pizza
+            } else {
+                pizza.setQty(qty);
+                pizza.calPrice();
+                //add to cart
+                cart.add(pizza);
+            }
 
             request.getSession().setAttribute("cart", cart);
-            request.setAttribute("pizzaCount", cart.size());
         }
-
         RequestDispatcher view = request.getRequestDispatcher("order.jsp");
         view.forward(request, response);
     }

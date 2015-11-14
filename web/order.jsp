@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,12 +47,12 @@
                                 <div class="modal-body" id="invent-pop">
 
                                     <table class='table table-hover'>
-                                        <thead><tr><th>Pizza Size</th><th>Pizza Toppings</th><th>Pizza Topping Count</th><th>Pizza Price</th><th>Method</th></tr></thead>
+                                        <thead><tr><th>Pizza Size</th><th>Pizza Toppings</th><th>Pizza Topping Count</th><th>Pizza Price</th><th>Qty</th><th>Method</th></tr></thead>
                                         <tbody>
-                                            <tr>
 
-                                                <c:if test="${pizzaCount > 0}">
-                                                    <c:forEach var="pizza" items="${cart}" varStatus="loop">
+                                            <c:if test="${fn:length(cart) > 0}">
+                                                <c:forEach var="pizza" items="${cart}" varStatus="loop">
+                                                    <tr>
                                                         <td>${pizza.size}</td>
                                                         <td>
                                                             <c:forEach var="toppings" items="${pizza.topping}">
@@ -60,6 +61,7 @@
                                                         </td>
                                                         <td>${pizza.toppingCount}</td>
                                                         <td>$ ${pizza.price}</td>
+                                                        <td>${pizza.qty}</td>
                                                         <td>
                                                             <c:choose>
                                                                 <c:when test="${pizza.delivery}">
@@ -150,6 +152,9 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            Qty : <input type="number" class="form-control" name="qty">
                         </div>
                         <div class="row">
 

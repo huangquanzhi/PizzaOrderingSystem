@@ -16,7 +16,7 @@
     <body>
         <div class="container">
             <div class="row">
-        <h1>Welcome, ${user.firstName}, ${user.firstName}</h1>
+        <h1>Welcome, ${user.firstName}, ${user.lastName}</h1>
             </div>
             <div class="row">
                 <form action="<c:url value="PizzaOrder"/>" method="post">
