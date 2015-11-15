@@ -5,10 +5,10 @@
  */
 package listener;
 
-import com.connect.db.DBConnection;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import model.DBConnection;
 
 /**
  * Web application lifecycle listener.

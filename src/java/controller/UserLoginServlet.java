@@ -5,7 +5,7 @@
  */
 package controller;
 
-import com.connect.db.DBConnection;
+import model.DBConnection;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -5,7 +5,7 @@ package controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.connect.db.DBConnection;
+import model.DBConnection;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -56,22 +56,22 @@ public class UserRegisterServlet extends HttpServlet {
 
         boolean exist = userDAO.userExist(dbConn.getConnection(), strUsername);
 
-        if(!exist){
-            User user = new User(strUsername,strPassword,strFirstname,strLastname,doublePhone,strAddress);
+        if (!exist) {
+            User user = new User(strUsername, strPassword, strFirstname, strLastname, doublePhone, strAddress);
             registered = userDAO.Register(dbConn.getConnection(), user);
-            if(registered){
+            if (registered) {
                 user.setUserID(userDAO.getUserID(dbConn.getConnection(), user));
                 page = "welcome.jsp";
                 request.getSession().setAttribute("user", user);
-            }else{
+            } else {
                 message = "Failed, please try again!";
                 page = "error.jsp";
             }
-        }else{
+        } else {
             message = "User already exist in database!";
             page = "error.jsp";
         }
-        
+
         request.setAttribute("error", message);
         RequestDispatcher view = request.getRequestDispatcher(response.encodeRedirectURL(page));
         view.forward(request, response);

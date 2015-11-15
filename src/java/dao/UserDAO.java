@@ -5,7 +5,7 @@
  */
 package dao;
 
-import com.connect.db.DBConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
