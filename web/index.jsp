@@ -40,8 +40,11 @@
                             Password: <input type="password" class="form-control" name="password" required/>
                         </div>
                         <div class="row">
-                            <a class="btn btn-default btn-block" data-toggle="modal" data-target="#register">Register</a>
-                            <button type="submit" class="btn btn-success btn-block">Log In</button>
+                            <button type="submit" class="btn btn-success btn-block" >Log In</button>   
+                        </div>
+                        <div class="row btn-group btn-group-lg" role="group">
+                            <a class="btn btn-default" data-toggle="modal" data-target="#register" >Register</a>
+                            <a class="btn btn-warning " href="admin/dashboard.jsp" >Go to Admin</a>
                         </div>
                     </form>
                 </div>
@@ -95,7 +98,7 @@
                                 <div class="form-group">
                                     <label for="regusername" class="col-sm-2 control-label"> Address: </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="address" required pattern=".{3,}" title="3 characters minimum">
+                                        <input type="number" class="form-control" name="address" required pattern=".{3,}" title="3 characters minimum">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success btn-lg btn-block"> Register </button>

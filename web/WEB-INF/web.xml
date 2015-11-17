@@ -34,7 +34,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminController</servlet-name>
-        <url-pattern>/AdminController</url-pattern>
+        <url-pattern>/admin/AdminController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CheckoutServlet</servlet-name>

@@ -12,6 +12,6 @@
         <title>Error</title>
     </head>
     <body>
-        ${requestScope.error}
+        ${error}
     </body>
 </html>

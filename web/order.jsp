@@ -78,8 +78,19 @@
                                         </tbody>
                                     </table>
                                     <div class="modal-footer">
-                                        <a class="btn btn-success" href="<%= response.encodeURL("checkout.jsp")%>">Check Out</a>
+                                        <form action="<c:url value="Checkout" />" method="post">
+                                            <c:choose>
+                                                <c:when test="${fn:length(cart) > 0}">
+                                                    <button type="submit" class="btn btn-success" >Check Out</button>
+                                                </c:when>
+                                                    <c:when test="${fn:length(cart) == 0}">
+                                                    <button type="submit" class="btn btn-success" disabled="disabled" >Check Out</button>
+                                                </c:when>
+                                            </c:choose>
+                                        </form>
+
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
                                     </div>
                                 </div>
                                 <!-- modal-content -->
@@ -154,7 +165,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            Qty : <input type="number" class="form-control" name="qty">
+                            Qty : <input type="number" class="form-control" name="qty" required min="1" max="99" value="1">
                         </div>
                         <div class="row">
 

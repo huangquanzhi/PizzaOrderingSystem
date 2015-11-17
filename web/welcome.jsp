@@ -19,7 +19,7 @@
         <h1>Welcome, ${user.firstName}, ${user.lastName}</h1>
             </div>
             <div class="row">
-                <form action="<c:url value="PizzaOrder"/>" method="post">
+                <form action="<c:url value="order.jsp"/>" method="post">
                     <button class="btn btn-block btn-success">Order Pizza -> </button>
                 </form>
             </div>

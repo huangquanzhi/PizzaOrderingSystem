@@ -42,7 +42,7 @@ public class UserRegisterServlet extends HttpServlet {
         String strPassword = request.getParameter("password");
         String strFirstname = request.getParameter("firstname");
         String strLastname = request.getParameter("lastname");
-        String doublePhone = request.getParameter("phone").toString();
+        String doublePhone = request.getParameter("phone");
         String strAddress = request.getParameter("address");
 
         //error message

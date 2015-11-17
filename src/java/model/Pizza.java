@@ -20,6 +20,7 @@ public class Pizza {
     private double price;
     private int qty;
 
+
     public Pizza() {
         this.size = "";
         this.topping = new ArrayList<String>();
@@ -63,7 +64,7 @@ public class Pizza {
         this.toppingCount = toppingCount;
     }
 
-    public boolean isDelivery() {
+    public boolean getDelivery() {
         return delivery;
     }
 
@@ -79,6 +80,7 @@ public class Pizza {
     public void setPrice(double price) {
         this.price = price;
     }
+
 
     public void calPrice() {
         double sizePrice = 0;

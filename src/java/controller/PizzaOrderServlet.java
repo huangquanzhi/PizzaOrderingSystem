@@ -41,51 +41,57 @@ public class PizzaOrderServlet extends HttpServlet {
 
         if (request.getSession().getAttribute("cart") == null) {
             request.getSession().setAttribute("cart", new ArrayList<Pizza>());
-        } else {
-            ArrayList<Pizza> cart = (ArrayList<Pizza>) request.getSession().getAttribute("cart");
-            Pizza pizza = new Pizza();
-
-            int qty = Integer.parseInt(request.getParameter("qty"));
-
-            //set delivery method
-            boolean delivery = (request.getParameter("delivery").equals("true")) ? true : false;
-            pizza.setDelivery(delivery);
-            //set pizza size
-            pizza.setSize(request.getParameter("pizzasize"));
-            //adding toppings
-            for (String t : request.getParameterValues("toppings")) {
-                pizza.addTopping(t);
-            }
-
-            //calculate the price of the pizza
-            pizza.getToppingCount();
-            if (cart.size() > 0) {
-                for (int i = 0; i < cart.size(); i++) {
-                    Pizza p = cart.get(i);  //get the pizza in arraylist
-                    if (p.equals(pizza)) {  //check if its the same pizza
-                        p.setQty(p.getQty() + qty); //set Qty
-                        p.calPrice();   //cal price of total
-                        break;
-                    }else {
-                        pizza.setQty(qty);
-                        pizza.calPrice();
-                        //add to cart
-                        cart.add(pizza);
-                        break;
-                    }
-                }
-                //not pizza
-            } else {
-                pizza.setQty(qty);
-                pizza.calPrice();
-                //add to cart
-                cart.add(pizza);
-            }
-
-            request.getSession().setAttribute("cart", cart);
         }
+
+        //get the exsiting cart
+        ArrayList<Pizza> cart = (ArrayList<Pizza>) request.getSession().getAttribute("cart");
+        Pizza pizza = new Pizza();
+        
+        int qty = 0;
+        try {
+            qty = Integer.parseInt(request.getParameter("qty"));
+        } catch (NumberFormatException ex) {
+            System.err.print("Numberformation Error: " + ex);
+        }
+        //set delivery method
+        boolean delivery = (request.getParameter("delivery").equals("true")) ? true : false;
+        pizza.setDelivery(delivery);
+        //set pizza size
+        pizza.setSize(request.getParameter("pizzasize"));
+        //adding toppings
+        for (String t : request.getParameterValues("toppings")) {
+            pizza.addTopping(t);
+        }
+
+        //calculate the price of the pizza
+        boolean exist = false;
+        pizza.getToppingCount();
+        if (cart.size() > 0) {  //if theres a pizza order
+            for (int i = 0; i < cart.size(); i++) {
+                Pizza p = cart.get(i);  //get the pizza in arraylist
+                if (p.equals(pizza)) {  //check if its the same pizza
+                    p.setQty(p.getQty() + qty); //set Qty
+                    p.calPrice();   //cal price of total
+                    exist = true;
+                    break;
+                }
+            }
+            //no pizza order
+        }
+
+        if (cart.size() <= 0 || !exist) {
+            pizza.setQty(qty);
+            pizza.calPrice();
+            //add to cart
+            cart.add(pizza);
+        }
+
+        //re set the cart
+        request.getSession().setAttribute("cart", cart);
+
         RequestDispatcher view = request.getRequestDispatcher("order.jsp");
         view.forward(request, response);
+
     }
 
     /**

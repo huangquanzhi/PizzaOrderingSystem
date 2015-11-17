@@ -5,19 +5,23 @@
  */
 package controller;
 
+import dao.PizzaDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.DBConnection;
+import model.Pizza;
+import model.User;
 
 /**
  *
  * @author Jackie
  */
 public class AdminController extends HttpServlet {
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -32,8 +36,31 @@ public class AdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        DBConnection dbConn = (DBConnection) request.getServletContext().getAttribute("dbConn");
+        
+        PizzaDAO pizzaDAO = new PizzaDAO();
+        
+        Object[] list = pizzaDAO.getAllOrder(dbConn.getConnection());
+        
+        double balance = 0 ;
+        int totalQty = 0;
+        int totalOrders = 0;
+        
+        for(Pizza p : (ArrayList<Pizza>)list[0]){
+            balance += p.getPrice();
+            totalQty += p.getQty();
+            totalOrders ++;
+        }
+        
+        request.setAttribute("pizzas",  (ArrayList<Pizza>)list[0]);
+        request.setAttribute("users",  (ArrayList<User>)list[1]);
+        request.setAttribute("balance" , balance);
+        request.setAttribute("totalQty", totalQty);
+        request.setAttribute("totalOrders", totalOrders);
+        
+        RequestDispatcher view = request.getRequestDispatcher(response.encodeURL("allOrders.jsp"));
+        view.forward(request, response);
     }
-
 
     /**
      * Returns a short description of the servlet.
@@ -44,5 +71,5 @@ public class AdminController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
 }
