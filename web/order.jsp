@@ -19,7 +19,7 @@
             body{
                 background-image: url("img/menu.jpg");
             }
-            
+
             #main{
                 padding-left: 3%;
                 padding-right: 3%;
@@ -93,7 +93,7 @@
                                                 <c:when test="${fn:length(cart) > 0}">
                                                     <button type="submit" class="btn btn-success" >Check Out</button>
                                                 </c:when>
-                                                    <c:when test="${fn:length(cart) == 0}">
+                                                <c:when test="${fn:length(cart) == 0}">
                                                     <button type="submit" class="btn btn-success" disabled="disabled" >Check Out</button>
                                                 </c:when>
                                             </c:choose>
@@ -111,9 +111,45 @@
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
             </nav>
-            <div class="row" style="margin-top: 30%">
+            <div class="row">
 
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-3">
+                        <img src="img/pizzapro.gif" alt=""/>
+                    </div>
+                </div>
+                <div class="row" >
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="height:300px">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-generic" data-slide-to="2"></li>
+                        </ol>
 
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <img src="img/pizza1.png" alt=""/>
+                                <div class="carousel-caption">
+
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="img/pizza2.png" alt=""/>
+                                <div class="carousel-caption">
+
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="img/pizza3.png" alt=""/>
+                                <div class="carousel-caption">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
@@ -179,12 +215,12 @@
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <span class="input-group-addon">Qty: </span>
-                                <input type="number" class="form-control" id="inputGroupSuccess2" name="qty" min="1" max="99" aria-describedby="inputGroupSuccess2Status" required value="1">
+                                        <input type="number" class="form-control" id="inputGroupSuccess2" name="qty" min="1" max="99" aria-describedby="inputGroupSuccess2Status" required value="1">
+                                    </div>
+                                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                                    <span id="inputGroupSuccess2Status" class="sr-only">(success)</span>
+                                </div>
                             </div>
-                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                            <span id="inputGroupSuccess2Status" class="sr-only">(success)</span>
-                        </div>
-                    </div>
                         </div>
                         <div class="row">
 
