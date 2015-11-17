@@ -20,7 +20,6 @@ public class Pizza {
     private double price;
     private int qty;
 
-
     public Pizza() {
         this.size = "";
         this.topping = new ArrayList<String>();
@@ -81,7 +80,6 @@ public class Pizza {
         this.price = price;
     }
 
-
     public void calPrice() {
         double sizePrice = 0;
         double toppingPrice = 0;
@@ -95,8 +93,10 @@ public class Pizza {
             sizePrice = 0;
         }
 
-        if (topping.size() > 3) {
+        if (topping.size() == 3) {
             toppingPrice = 3;
+        } else if (topping.size() > 3) {
+            toppingPrice = toppingCount - 1;
         } else {
             toppingPrice = toppingCount;
         }
@@ -124,28 +124,31 @@ public class Pizza {
         if (this.getClass() != obj.getClass()) {
             return false;
         }
-        
-        Pizza pizza = (Pizza)obj;
+
+        Pizza pizza = (Pizza) obj;
         boolean matchT = false;
         //check topping matching
-        for(String t:this.getTopping()){
-            for(int i = 0;i<pizza.getToppingCount();i++){
-                String t2 = pizza.getTopping().get(i);
-                if(t.equals(t2)){
-                    matchT = true;
-                    break;
-                }else{
-                    matchT = false;
+        if ((this.getToppingCount() > 0) || (pizza.getToppingCount() > 0)) {
+            for (String t : this.getTopping()) {
+                for (int i = 0; i < pizza.getToppingCount(); i++) {
+                    String t2 = pizza.getTopping().get(i);
+                    if (t.equals(t2)) {
+                        matchT = true;
+                        break;
+                    } else {
+                        matchT = false;
+                    }
                 }
             }
+        } else {
+            matchT = true;
         }
-        
-        boolean matchD = (this.delivery == pizza.delivery);
-        boolean matchS = (this.size.equals(pizza.getSize())) ;
-        boolean matchC = (this.toppingCount == pizza.toppingCount);
-        
-        return (matchT) && (matchD) && (matchS) && (matchC);
 
+        boolean matchD = (this.delivery == pizza.delivery);
+        boolean matchS = (this.size.equals(pizza.getSize()));
+        boolean matchC = (this.toppingCount == pizza.toppingCount);
+
+        return (matchT) && (matchD) && (matchS) && (matchC);
 
     }
 

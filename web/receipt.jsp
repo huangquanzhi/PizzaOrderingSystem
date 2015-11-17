@@ -16,6 +16,11 @@
         <title>Thank you for your order</title>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="js/bootstrap.js" type="text/javascript"></script>
+        <style>
+            body{
+                background-image: url("img/paper_background.jpg");
+            }
+        </style>
     </head>
     <body>
         <div class="container">

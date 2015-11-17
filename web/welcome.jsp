@@ -12,17 +12,31 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Welcome!</title>
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <style>
+            body{
+                background-image: url(" img/welcome.png"); 
+            }
+        </style>
+        
+        
     </head>
     <body>
+
+
         <div class="container">
-            <div class="row">
-        <h1>Welcome, ${user.firstName}, ${user.lastName}</h1>
+            <div class="row" style="margin-top: 25%">
+                
             </div>
-            <div class="row">
+            <div class="jumbotron">
+                <h1>Welcome Back, </h1>
+                <p>${user.firstName}, ${user.lastName}</p>
+                <p>
                 <form action="<c:url value="order.jsp"/>" method="post">
-                    <button class="btn btn-block btn-success">Order Pizza -> </button>
+                    <button class="btn btn-block btn-success"> Order Pizza </button>
                 </form>
+                </p>
             </div>
+
         </div>
     </body>
 </html>

@@ -24,7 +24,7 @@ public class UserDAO {
     ResultSet rs = null;
 
     public User AuthLog(Connection conn, String strUsername, String strPassword) {
-        String query = "SELECT * FROM Users WHERE userName = ? AND passWord = ?";
+        String query = "SELECT * FROM users WHERE userName = ? AND passWord = ?";
         User user = null;
         try {
 
@@ -57,7 +57,7 @@ public class UserDAO {
 
     public boolean userExist(Connection conn, String username) {
         Boolean exist = false;
-        String query = "SELECT * FROM Users WHERE userName = ?";
+        String query = "SELECT * FROM users WHERE userName = ?";
 
         try {
 
@@ -82,7 +82,7 @@ public class UserDAO {
 
     public int getUserID(Connection conn, User u) {
         int uid = 0;
-        String query = "SELECT userID FROM Users WHERE userName = ? AND userPassword";
+        String query = "SELECT userID FROM users WHERE userName = ? AND userPassword";
 
         try {
 
@@ -107,7 +107,7 @@ public class UserDAO {
 
     public User getUserbyID(Connection conn, int id) {
 
-        String query = "SELECT * FROM Users WHERE userID = ?";
+        String query = "SELECT * FROM users WHERE userID = ?";
         User user = null;
         
         try {
@@ -136,7 +136,7 @@ public class UserDAO {
     }
 
     public boolean Register(Connection conn, User u) {
-        String query = "INSERT INTO Users(userName, passWord,firstName,lastName,phone,address) VALUES(?,?,?,?,?,?)";
+        String query = "INSERT INTO users(userName, passWord,firstName,lastName,phone,address) VALUES(?,?,?,?,?,?)";
         boolean registered = false;
         try {
 
@@ -164,7 +164,7 @@ public class UserDAO {
 
     public ArrayList<User> getAllUsers(Connection conn) {
 
-        String query = "SELECT * FROM Users ";
+        String query = "SELECT * FROM users ";
         ArrayList<User> userlist = new ArrayList<User>();
 
         try {

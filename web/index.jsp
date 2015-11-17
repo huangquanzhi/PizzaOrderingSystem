@@ -16,10 +16,15 @@
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="js/bootstrap.js" type="text/javascript"></script>
         <link href="css/indexstyle.css" rel="stylesheet" type="text/css"/>
+        <style>
+            body{
+                background-image: url("img/main.jpg");
+            }
+        </style>
         <script>
-            $('#register').on('shown.bs.modal', function () {
-                $('#register').focus()
-            })
+$('#register').on('shown.bs.modal', function () {
+    $('#register').focus()
+})
         </script>
 
 
@@ -27,30 +32,44 @@
     </head>
     <body>
         <div class="container" id="frame">
-            <div class="row" style="margin-top: 30%">
+            <div class="row" style="margin-top:10%">
 
             </div>
             <div class="row" id="mainlog">
                 <div class="col-md-6 col-md-offset-3">
-                    <form action="<c:url value="UserLogin" />" method="post">
-                        <div class="row">
-                            Username: <input type="text" class="form-control" name="username" required/> 
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Welcome to Pizza Shop
                         </div>
-                        <div class="row">
-                            Password: <input type="password" class="form-control" name="password" required/>
+                        <div class="panel-body" style="padding: 10%">
+                            <form action="<c:url value="UserLogin" />" method="post">
+                                <div class="row">
+                                    Username: <input type="text" class="form-control" name="username" required/> 
+                                </div>
+                                <div class="row">
+                                    Password: <input type="password" class="form-control" name="password" required/>
+                                </div>
+                                <div class="row" style="margin-top: 3%">
+                                    <button type="submit" class="btn btn-success btn-block" >Log In</button>   
+                                </div>
+                            </form>
                         </div>
-                        <div class="row">
-                            <button type="submit" class="btn btn-success btn-block" >Log In</button>   
-                        </div>
-                        <div class="row btn-group btn-group-lg" role="group">
-                            <a class="btn btn-default" data-toggle="modal" data-target="#register" >Register</a>
-                            <a class="btn btn-warning " href="admin/dashboard.jsp" >Go to Admin</a>
-                        </div>
-                    </form>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-2">
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#register" >Register</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="btn btn-warning " href="admin/dashboard.jsp" >Go to Admin</a>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
                 </div>
+
             </div>
 
-            <div class="row" style="margin-bottom: 30%">
+            <div class="row" style="margin-bottom: 20%">
 
             </div>
 
@@ -92,13 +111,13 @@
                                 <div class="form-group">
                                     <label for="regusername" class="col-sm-2 control-label"> Phone: </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="phone" required pattern=".{10,10}" title="10 numbers required">
+                                        <input type="text" class="form-control" name="phone"  required pattern="[0-9]{10}" title="10 numbers required">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="regusername" class="col-sm-2 control-label"> Address: </label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" name="address" required pattern=".{3,}" title="3 characters minimum">
+                                        <input type="text" class="form-control" name="address" required pattern=".{3,}" title="3 characters minimum">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success btn-lg btn-block"> Register </button>

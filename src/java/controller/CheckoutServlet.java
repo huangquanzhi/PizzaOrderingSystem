@@ -78,7 +78,7 @@ public class CheckoutServlet extends HttpServlet {
                 request.setAttribute("cart", cart);
                 page = "receipt.jsp";
                 //remove cart
-                request.getSession().removeAttribute("cart");
+                request.getSession().setAttribute("cart", new ArrayList<Pizza>());
             } else {
                 
                 message = "ERROR: Order failed to insert!";

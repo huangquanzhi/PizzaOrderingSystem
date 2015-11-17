@@ -14,10 +14,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Show All Orders</title>
         <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>       
         <link href="../css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="../js/bootstrap.js" type="text/javascript"></script>
+        <style>
+            body{
+            background-image: url("../img/paper_background.jpg");
+            }
+        </style>
     </head>
     <body>
         <div class="container">

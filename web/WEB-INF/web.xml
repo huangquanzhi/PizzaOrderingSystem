@@ -55,7 +55,7 @@
     </context-param>
     <context-param>
         <param-name>url</param-name>
-        <param-value>jdbc:mysql://localhost/</param-value>
+        <param-value>jdbc:mysql://107.180.3.101/</param-value>
     </context-param>
     <context-param>
         <param-name>database</param-name>
@@ -63,7 +63,7 @@
     </context-param>
     <context-param>
         <param-name>dbusername</param-name>
-        <param-value>root</param-value>
+        <param-value>sheridan</param-value>
     </context-param>
     <context-param>
         <param-name>dbpassword</param-name>

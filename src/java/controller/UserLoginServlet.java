@@ -60,7 +60,8 @@ public class UserLoginServlet extends HttpServlet {
 
                 if (user.getFirstName() == null || user.getLastName() == null || user.getAddress() == null) {
                     //user detail not completed
-                    page = "setting.jsp";
+                    message = "User detail not completed!";
+                    page = "error.jsp";
                 } else {
                     //user detail completed
                     page = "welcome.jsp";

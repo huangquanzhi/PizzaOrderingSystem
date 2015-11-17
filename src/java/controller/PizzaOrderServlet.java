@@ -46,7 +46,7 @@ public class PizzaOrderServlet extends HttpServlet {
         //get the exsiting cart
         ArrayList<Pizza> cart = (ArrayList<Pizza>) request.getSession().getAttribute("cart");
         Pizza pizza = new Pizza();
-        
+
         int qty = 0;
         try {
             qty = Integer.parseInt(request.getParameter("qty"));
@@ -59,10 +59,11 @@ public class PizzaOrderServlet extends HttpServlet {
         //set pizza size
         pizza.setSize(request.getParameter("pizzasize"));
         //adding toppings
-        for (String t : request.getParameterValues("toppings")) {
-            pizza.addTopping(t);
+        if (request.getParameterValues("toppings") != null) {
+            for (String t : request.getParameterValues("toppings")) {
+                pizza.addTopping(t);
+            }
         }
-
         //calculate the price of the pizza
         boolean exist = false;
         pizza.getToppingCount();

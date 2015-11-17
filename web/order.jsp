@@ -15,9 +15,19 @@
         <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>       
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="js/bootstrap.js" type="text/javascript"></script>
+        <style>
+            body{
+                background-image: url("img/menu.jpg");
+            }
+            
+            #main{
+                padding-left: 3%;
+                padding-right: 3%;
+            }
+        </style>
     </head>
     <body>
-        <div class="container">
+        <div class="container" id="main">
 
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -131,7 +141,7 @@
                                     <div class="panel-heading">Pizza Size</div>
                                     <div class="panel-body">
                                         <label class="radio-inline">
-                                            <input type="radio" name="pizzasize" value="small"> ($5) Small
+                                            <input type="radio" name="pizzasize" value="small" checked="checked"> ($5) Small
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="pizzasize" value="large"> ($7) Large
@@ -146,7 +156,7 @@
                                     <div class="panel-heading">Choose toppings: <br> ($1/topping -  If 3 toppings are selected, the 4th is free) </div>
                                     <div class="panel-body">
                                         <label class="checkbox-inline">
-                                            <input type="checkbox" name="toppings" value="Pepperoni"> Pepperoni
+                                            <input type="checkbox" name="toppings" value="Pepperoni" > Pepperoni
                                         </label>
                                         <label class="checkbox-inline">
                                             <input type="checkbox" name="toppings" value="Sausage"> Sausage
@@ -164,8 +174,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            Qty : <input type="number" class="form-control" name="qty" required min="1" max="99" value="1">
+                        <div class="row" style="margin-bottom:3%">
+                            <div class="form-group has-success has-feedback">
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Qty: </span>
+                                <input type="number" class="form-control" id="inputGroupSuccess2" name="qty" min="1" max="99" aria-describedby="inputGroupSuccess2Status" required value="1">
+                            </div>
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                            <span id="inputGroupSuccess2Status" class="sr-only">(success)</span>
+                        </div>
+                    </div>
                         </div>
                         <div class="row">
 
