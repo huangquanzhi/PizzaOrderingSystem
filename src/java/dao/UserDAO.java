@@ -23,6 +23,13 @@ public class UserDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
+    /**
+     *
+     * @param conn Database connection
+     * @param strUsername Entered username
+     * @param strPassword Entered password
+     * @return  Return user object, or null
+     */
     public User AuthLog(Connection conn, String strUsername, String strPassword) {
         String query = "SELECT * FROM users WHERE userName = ? AND passWord = ?";
         User user = null;
@@ -55,6 +62,12 @@ public class UserDAO {
         return user;
     }
 
+    /**
+     *
+     * @param conn Database connection
+     * @param username  Username
+     * @return  True if user exist
+     */
     public boolean userExist(Connection conn, String username) {
         Boolean exist = false;
         String query = "SELECT * FROM users WHERE userName = ?";
@@ -80,6 +93,12 @@ public class UserDAO {
         return exist;
     }
 
+    /**
+     *
+     * @param conn Database connection
+     * @param u User object
+     * @return  Return user id if success else 0
+     */
     public int getUserID(Connection conn, User u) {
         int uid = 0;
         String query = "SELECT userID FROM users WHERE userName = ? AND userPassword";
@@ -105,6 +124,12 @@ public class UserDAO {
 
     }
 
+    /**
+     *
+     * @param conn Database connection
+     * @param id User id
+     * @return Return user object if successful or null
+     */
     public User getUserbyID(Connection conn, int id) {
 
         String query = "SELECT * FROM users WHERE userID = ?";
@@ -135,6 +160,12 @@ public class UserDAO {
 
     }
 
+    /**
+     *
+     * @param conn Database connection
+     * @param u User object
+     * @return Return true if register is successful
+     */
     public boolean Register(Connection conn, User u) {
         String query = "INSERT INTO users(userName, passWord,firstName,lastName,phone,address) VALUES(?,?,?,?,?,?)";
         boolean registered = false;
@@ -162,6 +193,11 @@ public class UserDAO {
         return registered;
     }
 
+    /**
+     *
+     * @param conn Database connection
+     * @return Arraylist of All users
+     */
     public ArrayList<User> getAllUsers(Connection conn) {
 
         String query = "SELECT * FROM users ";

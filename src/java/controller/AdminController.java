@@ -23,7 +23,6 @@ import model.User;
  */
 public class AdminController extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -39,19 +38,19 @@ public class AdminController extends HttpServlet {
         DBConnection dbConn = (DBConnection) request.getServletContext().getAttribute("dbConn");
         
         PizzaDAO pizzaDAO = new PizzaDAO();
-        
+        //get Object[0] pizza , Object[1] users from database
         Object[] list = pizzaDAO.getAllOrder(dbConn.getConnection());
         
-        double balance = 0 ;
-        int totalQty = 0;
-        int totalOrders = 0;
+        double balance = 0 ;    //total store balance
+        int totalQty = 0;   //total qty sales
+        int totalOrders = 0;    //total orders
         
         for(Pizza p : (ArrayList<Pizza>)list[0]){
-            balance += p.getPrice();
+            balance += p.getPrice();    
             totalQty += p.getQty();
             totalOrders ++;
         }
-        
+        //set attribute
         request.setAttribute("pizzas",  (ArrayList<Pizza>)list[0]);
         request.setAttribute("users",  (ArrayList<User>)list[1]);
         request.setAttribute("balance" , balance);

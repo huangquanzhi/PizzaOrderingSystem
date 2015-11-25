@@ -17,7 +17,11 @@ import model.DBConnection;
  */
 public class DBConnectionListener implements ServletContextListener {
 
-     @Override
+    /**
+     *
+     * @param sce
+     */
+    @Override
     public void contextInitialized(ServletContextEvent sce) {
 
         ServletContext sc = sce.getServletContext();
@@ -31,6 +35,10 @@ public class DBConnectionListener implements ServletContextListener {
         sc.setAttribute("dbConn", dbConn);
     }
 
+    /**
+     *
+     * @param sce
+     */
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

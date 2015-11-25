@@ -22,6 +22,13 @@ import model.User;
  */
 public class UserLoginServlet extends HttpServlet {
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.sendRedirect("index.jsp");
@@ -48,6 +55,7 @@ public class UserLoginServlet extends HttpServlet {
         //create connection
         DBConnection dbConn = (DBConnection) request.getServletContext().getAttribute("dbConn");
 
+        
         UserDAO userDAO = new UserDAO();
 
         boolean exist = userDAO.userExist(dbConn.getConnection(), strUsername);

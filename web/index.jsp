@@ -22,9 +22,9 @@
             }
         </style>
         <script>
-$('#register').on('shown.bs.modal', function () {
-    $('#register').focus()
-})
+            $('#register').on('shown.bs.modal', function () {
+                $('#register').focus()
+            })
         </script>
 
 

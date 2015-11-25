@@ -7,12 +7,21 @@ import java.sql.*;
 /**
  *
  * 
+ * @author Jackie
  */
 public class DBConnection {
     private String url;
     private String username;
     private String password;
     
+    /**
+     *
+     * @param driver
+     * @param url
+     * @param database
+     * @param username
+     * @param password
+     */
     public DBConnection(String driver, String url, String database,
             String username, String password) {
         
@@ -27,6 +36,10 @@ public class DBConnection {
         this.password = password;
     }
     
+    /**
+     *
+     * @return
+     */
     public Connection getConnection() {
         Connection conn = null;
         try {
@@ -39,6 +52,12 @@ public class DBConnection {
         
     }
     
+    /**
+     *
+     * @param conn
+     * @param stmt
+     * @param rs
+     */
     public static void closeJDBCObjects(Connection conn, Statement stmt, ResultSet rs) {
         try {
             if (rs != null) {
@@ -56,6 +75,11 @@ public class DBConnection {
         }
     }
     
+    /**
+     *
+     * @param conn
+     * @param stmt
+     */
     public static void closeJDBCObjects(Connection conn, Statement stmt) {
         closeJDBCObjects(conn, stmt, null);
     }

@@ -24,10 +24,15 @@ public class PizzaDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
+    /**
+     *
+     * @param conn Database connection
+     * @return Array of Object, contain Pizza and User
+     */
     public Object[] getAllOrder(Connection conn) {
-
+        //sql query
         String query = "SELECT * FROM pizzaorders ";
-        
+        //list to store pizza and user arraylist
         Object[] list = new Object[2];
         
         ArrayList<Pizza> pizzalist = new ArrayList<Pizza>();
@@ -41,15 +46,18 @@ public class PizzaDAO {
             while (rs.next()) {
                 Pizza pizza = new Pizza();
 
+                //makeing new pizza with database information
                 pizza.setDelivery(rs.getBoolean("delivery"));
                 pizza.setPrice(rs.getDouble("price"));
                 pizza.setQty(rs.getInt("quantity"));
                 pizza.setSize(rs.getString("pizzaSize"));
                 pizza.setToppingCount(rs.getInt("toppingNum"));
-                
+                //add to arraylist
                 pizzalist.add(pizza);
                 
+                //create new User database access object to get user information
                 UserDAO userDAO = new UserDAO();
+                //create new user
                 User user = userDAO.getUserbyID(conn,rs.getInt("userID"));
                 userlist.add(user);
                 
@@ -60,7 +68,7 @@ public class PizzaDAO {
         } finally {
             DBConnection.closeJDBCObjects(null, ps, rs);
         }
-
+        //set arraylist into array
         list[0] = pizzalist;
         list[1] = userlist;
         
@@ -68,11 +76,18 @@ public class PizzaDAO {
 
     }
 
+    /**
+     *
+     * @param conn Database connection
+     * @param user  User information
+     * @param pizza Arraylist of ordered pizzas
+     * @return  True if success to insert into database
+     */
     public boolean addPizzaOrder(Connection conn, User user, ArrayList<Pizza> pizza) {
 
         boolean success = false;
         int count = 0;
-
+        //sql query
         String query = "INSERT INTO pizzaorders (userID,pizzaSize,toppingNum,quantity,delivery,price)"
                 + "VALUES (?,?,?,?,?,?);";
 
@@ -80,6 +95,7 @@ public class PizzaDAO {
             ps = conn.prepareStatement(query);
             ps.setInt(1, user.getUserID());
 
+            //insert pizza into database with looping
             for (Pizza p : pizza) {
 
                 ps.setString(2, p.getSize());
@@ -90,6 +106,7 @@ public class PizzaDAO {
 
                 int c = ps.executeUpdate();
 
+                //count the amount of pizza being inserted
                 if (c > 0) {
                     count++;
                 }

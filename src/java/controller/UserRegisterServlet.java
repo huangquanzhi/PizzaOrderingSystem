@@ -22,6 +22,13 @@ import model.User;
  */
 public class UserRegisterServlet extends HttpServlet {
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.sendRedirect("index.jsp");
@@ -53,15 +60,20 @@ public class UserRegisterServlet extends HttpServlet {
         DBConnection dbConn = (DBConnection) request.getServletContext().getAttribute("dbConn");
 
         UserDAO userDAO = new UserDAO();
-
+        //check if user exist
         boolean exist = userDAO.userExist(dbConn.getConnection(), strUsername);
-
+        
         if (!exist) {
+            //create new user object with entered information
             User user = new User(strUsername, strPassword, strFirstname, strLastname, doublePhone, strAddress);
+            //register the user, and check if its successful
             registered = userDAO.Register(dbConn.getConnection(), user);
             if (registered) {
+                //set the userID
                 user.setUserID(userDAO.getUserID(dbConn.getConnection(), user));
+                //redirect page
                 page = "welcome.jsp";
+                //set into session
                 request.getSession().setAttribute("user", user);
             } else {
                 message = "Failed, please try again!";

@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DBConnection;
 import model.Pizza;
-import model.Receipt;
 import model.User;
 
 /**
@@ -25,6 +24,13 @@ import model.User;
  */
 public class CheckoutServlet extends HttpServlet {
     
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.sendRedirect("index.jsp");
@@ -43,21 +49,27 @@ public class CheckoutServlet extends HttpServlet {
             throws ServletException, IOException {
         
         DBConnection dbConn = (DBConnection) request.getServletContext().getAttribute("dbConn");
-        Receipt receipt = new Receipt((User) request.getSession().getAttribute("user"));
         
+        //get the user object from session
         User user = (User) request.getSession().getAttribute("user");
+        //get the cart with pizzas from session
         ArrayList<Pizza> cart = (ArrayList<Pizza>) request.getSession().getAttribute("cart");
         
+        //page to redirect
         String page = "index.jsp";
         String message = "";
         
+        //if there is item in cart
         if (cart.size() > 0) {
+            //create database access object
             PizzaDAO pizzaDAO = new PizzaDAO();
+            //add the pizza into database, if suceesful then 
             if (pizzaDAO.addPizzaOrder(dbConn.getConnection(), user, cart)) {
                 
+                //count
                 int deliveryQty = 0, pickupQty = 0;
                 double deliveryPrice = 0, pickupPrice = 0;
-                
+                //count the total ,base on delivery or pickup
                 for (Pizza p : cart) {
                     if (p.getDelivery()) {
                         deliveryQty += p.getQty();
@@ -68,6 +80,7 @@ public class CheckoutServlet extends HttpServlet {
                     }
                 }
                 
+                //set into attribute
                 request.setAttribute("deliveryQty", deliveryQty);
                 request.setAttribute("pickupQty", pickupQty);
                 request.setAttribute("deliveryPrice", deliveryPrice);
@@ -77,15 +90,16 @@ public class CheckoutServlet extends HttpServlet {
                 request.setAttribute("totalPriceAfterTax", (deliveryPrice + pickupPrice) * 1.13);
                 request.setAttribute("cart", cart);
                 page = "receipt.jsp";
-                //remove cart
+                //order have been confirmed, reset cart
                 request.getSession().setAttribute("cart", new ArrayList<Pizza>());
             } else {
-                
+                //fail to insert into database
                 message = "ERROR: Order failed to insert!";
                 request.setAttribute("error", message);
                 page = "error.jsp";
             }
         } else {
+            //if there is no order
             page = "PizzaOrder";
         }
         
