@@ -55,7 +55,7 @@
     </context-param>
     <context-param>
         <param-name>url</param-name>
-        <param-value>jdbc:mysql://107.180.3.101/</param-value>
+        <param-value>jdbc:mysql://127.0.0.1/</param-value>
     </context-param>
     <context-param>
         <param-name>database</param-name>
